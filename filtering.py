@@ -23,7 +23,9 @@ def search_dat_files(path):
     return source_file_list
 
 pliki = search_dat_files("/home/willy/PycharmProjects/dictionary-filtering-python/")
-print(pliki)
+#print(pliki)
+#print(pliki[0])
+
 
 
 def min_max_pw(min, max, input, output):
@@ -44,8 +46,25 @@ def duplicate_pw(input, output):
 
 #duplicate_pw("password2.dat","password3.dat")
 
+# czyszczenie plików
+def clear_file(filename):
+    p = open(filename, "w+")
+    p.write("")
+    p.close()
 
 
+def filtrowanie_plikow(min, max, input):
+    temp_file = input
+    temp_file += ".tmp"
+    output = input + ".filtered"
+    min_max_pw(min,max,input,temp_file)
+    duplicate_pw(temp_file,output)
+    #clear_file(temp_file)
+    os.remove(temp_file)
+
+
+
+# test filtrowania:
 # source_file = open("password.dat", "r")
 # print("Source:")
 # print(source_file.read())
@@ -55,12 +74,13 @@ def duplicate_pw(input, output):
 # print(dest_file.read())
 # dest_file.close()
 
-def thread_function(name):
+def thread_function(name, plik):
     logging.info("Thread %s: starting", name)
     time.sleep(2)
-    pliki = search_dat_files("/home/willy/PycharmProjects/dictionary-filtering-python/")
-    print(pliki)
-    print("Pliki znalezione przez Thread {0}: {1}\n".format(name,pliki))
+    result = filtrowanie_plikow(min_pass, max_pass, plik)
+    #pliki = filtrowanie_plikow(min, max, input, output)
+    print(result)
+    #print("Pliki znalezione przez Thread {0}: {1}\n".format(name,pliki))
     logging.info("Thread %s: finishing", name)
 
 
@@ -70,11 +90,17 @@ if __name__ == "__main__":
                         datefmt="%H:%M:%S")
 
     threads = list()
-    for index in range(3):
+    #for plik in pliki:
+
+        #print(plik)
+    index = 0
+    for plik_th in pliki:
+
         logging.info("Main    : create and start thread %d.", index)
-        x = threading.Thread(target=thread_function, args=(index,))
+        x = threading.Thread(target=thread_function, args=(index,plik_th))
         threads.append(x)
         x.start()
+        index = index + 1
 
     for index, thread in enumerate(threads):
         logging.info("Main    : before joining thread %d.", index)
