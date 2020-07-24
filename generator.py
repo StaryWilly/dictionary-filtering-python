@@ -11,7 +11,7 @@ char_classes = (string.ascii_lowercase,
                     string.digits)
                     #string.punctuation)   # dodac aby byly znaki specjalne
 
-size = lambda: secrets.choice(range(5,16))                  # Chooses a password.dat length.
+size = lambda: secrets.choice(range(3,20))                  # Chooses a password.dat length.
 char = lambda: secrets.choice(secrets.choice(char_classes)) # Chooses one character, uniformly selected from each of the included character classes.
 pw   = lambda: ''.join([char() for _ in range(size())])     # Generates the variable-length password.dat.
 
@@ -27,14 +27,28 @@ def clear_file(filename):
 # generator hasel
 def generuj_plik(filename, mode):
     f = open(filename, mode)
-    for i in range(1, 1001):
+    for i in range(1, 1000001):
         password.append(pw())
         temp_pass = password[i - 1]
         # print("{0}. znakow: {1} : {2}".format(i,len(temp_pass),temp_pass))
         f.write(password[i - 1] + '\n')
     f.close()
+file = "password.dat"
+a = clear_file(file)
+b = generuj_plik(file, "a+")
+print("Generije plik: {0}".format(file))
+file = "password2.dat"
+a = clear_file(file)
+b = generuj_plik(file, "a+")
+print("Generije plik: {0}".format(file))
+file = "password3.dat"
+a = clear_file(file)
+b = generuj_plik(file, "a+")
+print("Generije plik: {0}".format(file))
+file = "password4.dat"
+a = clear_file(file)
+b = generuj_plik(file, "a+")
+print("Generije plik: {0}".format(file))
 
-a = clear_file("password4.dat")
-b = generuj_plik("password4.dat", "a+")
-print(a)
-print(b)
+#print(a)
+#print(b)
