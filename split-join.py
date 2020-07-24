@@ -1,36 +1,31 @@
-#I named the accumulative file common.doc to distinct from the other .txt files in the target directory. Also, this example code #implies all the files are in the same directory.
+from pathlib import Path
 
-# merging.py
-import os
-import glob
 
-with open("common.doc", "w") as common:
-    for txt in glob.glob("./*.txt"):
-        with open(txt, "r") as f:
-            content = f.read()
-        common.write("{} ({})\n".format(os.path.basename(txt), content))
+input_file = "password.dat"
+def file_len(input):
+    with open(input) as f:
+        for i, l in enumerate(f):
+            pass
+    return i + 1
+a = file_len(input_file)
+print(a)
+wielkosc = Path(input_file).stat().st_size
+podzial_linii = 5000000 # w MB
+wynik = a * podzial_linii
+wynik_koncwy = wynik / wielkosc
+print(wynik_koncwy)
+print("W zaokragleniu: {0}".format(round(wynik_koncwy)))
 
-#And after common.doc editing:
 
-# splitting.py
-with open("common.doc", "r") as common:
-    for line in common:
-        name = line[:line.find(" (")]
-        text = line[line.find(" (")+2:line.rfind(")")]
-        with open(name, "w") as f:
-            f.write(text)
+pozycja_start = 1
+pozycja_stop = wynik_koncwy
+pozycja_start += wynik_koncwy
+pozycja_stop += wynik_koncwy
 
-#And a solution for multiline text (merging stays with .strip() removed on content writing), not suitable for hundreds of thousands of #files tho...
-
-# splitting2.py
-with open("common.doc", "r") as common:
-    everything = common.read()
-elements = everything.split(")")
-for elem in elements:
-    name = elem[:elem.find(" (")].strip()
-    text = elem[elem.find(" (")+2:]
-    if name:
-        with open(name, "w") as f:
-            f.write(text)
-
+# def min_max_pw(min, max, input, output):
+#     source_file = open(input, "r")
+#     dest_file = open(output, "w")
+#     for line in source_file:
+#         if len(line) > min and len(line) < max:
+#             dest_file.write(line)
 

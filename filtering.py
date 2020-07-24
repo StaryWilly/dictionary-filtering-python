@@ -57,10 +57,10 @@ def filtrowanie_plikow(min, max, input):
     temp_file = input
     temp_file += ".tmp"
     output = input + ".filtered"
-    min_max_pw(min,max,input,temp_file)
-    duplicate_pw(temp_file,output)
+    min_max_pw(min,max,input,output)
+    #duplicate_pw(temp_file,output) # trzeba zrobic globalnie + multitask
     #clear_file(temp_file)
-    os.remove(temp_file)
+    #os.remove(temp_file)
 
 
 
