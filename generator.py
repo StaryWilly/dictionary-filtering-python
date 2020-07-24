@@ -18,15 +18,23 @@ pw   = lambda: ''.join([char() for _ in range(size())])     # Generates the vari
 password = []
 
 # czyszczenie pliku z haslami
-p=open("passwords_file","w+")
-p.write("")
-p.close()
+def clear_file(filename):
+    p = open(filename, "w+")
+    p.write("")
+    p.close()
+
 
 # generator hasel
-f=open("passwords_file","a+")
-for i in range(1,1001):
-    password.append(pw())
-    temp_pass = password[i-1]
-    #print("{0}. znakow: {1} : {2}".format(i,len(temp_pass),temp_pass))
-    f.write(password[i-1] + '\n')
-f.close()
+def generuj_plik(filename, mode):
+    f = open(filename, mode)
+    for i in range(1, 1001):
+        password.append(pw())
+        temp_pass = password[i - 1]
+        # print("{0}. znakow: {1} : {2}".format(i,len(temp_pass),temp_pass))
+        f.write(password[i - 1] + '\n')
+    f.close()
+
+a = clear_file("password4.dat")
+b = generuj_plik("password4.dat", "a+")
+print(a)
+print(b)
