@@ -17,7 +17,7 @@ def search_dat_files(path):
     source_file_list = []
     for root, dirs, files in os.walk(path):
         for file in files:
-            if file.endswith("dat"):
+            if file.endswith("split"):
                 #print(os.path.join(root, file))
                 source_file_list.append(file)
     return source_file_list
@@ -26,6 +26,10 @@ pliki = search_dat_files("/home/willy/PycharmProjects/dictionary-filtering-pytho
 #print(pliki)
 #print(pliki[0])
 
+
+
+def pobierz_plik():
+    print("pobierz plik")
 
 
 def min_max_pw(min, max, input, output):
@@ -97,6 +101,7 @@ if __name__ == "__main__":
     for plik_th in pliki:
 
         logging.info("Main    : create and start thread %d.", index)
+        #   usuniecie pliku z listy
         x = threading.Thread(target=thread_function, args=(index,plik_th))
         threads.append(x)
         x.start()
@@ -106,3 +111,9 @@ if __name__ == "__main__":
         logging.info("Main    : before joining thread %d.", index)
         thread.join()
         logging.info("Main    : thread %d done", index)
+
+
+"""
+dopisac aby analizował pliki split, podane przez program główny.
+
+"""
