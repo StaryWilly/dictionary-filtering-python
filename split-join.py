@@ -24,7 +24,7 @@ def split_file(input,  pozycja_start, pozycja_stop):
         dest_file = open(output, "a+")
 
         if i >= pozycja_start and i < pozycja_stop:
-            print("Aktualne haslo: {0}".format(l))
+            #print("Aktualne haslo: {0}".format(l))
             #print("Pozycja start: {0}".format(pozycja_start))
             #print("Pozycja stop: {0}".format(pozycja_stop))
             dest_file.write(l)
@@ -53,9 +53,9 @@ def zapis_listy(filename, data):
 lista_plikow = []
 a = file_len(input_file)
 print("Wielkosc pliku Input: {0}".format(a))
-wielkosc = Path(input_file).stat().st_size
+wielkosc = Path(input_file).stat().st_size #wielkosc pliku
 #podzial_linii = 5 * 1000000 # w MB
-podzial_linii = 5 * 10 # w MB
+podzial_linii = 1 * 1000000 # w B
 print("Podzial linii: {0}".format(podzial_linii))
 wynik = a * podzial_linii
 wynik_koncwy = wynik / wielkosc
@@ -74,6 +74,9 @@ for i in b:
 
 zapis_listy("lista_zadan.list", b)
 
+
+
+#TODO
 """
 dopisac funkcje do kasowania pliku INPUT
 przeniesc komendy startowe do funkcji

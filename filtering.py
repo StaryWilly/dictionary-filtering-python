@@ -9,6 +9,7 @@ import glob, os
 import logging
 import threading
 import time
+import multiprocessing
 
 min_pass = 5
 max_pass = 15
@@ -22,14 +23,37 @@ def search_dat_files(path):
                 source_file_list.append(file)
     return source_file_list
 
-pliki = search_dat_files("/home/willy/PycharmProjects/dictionary-filtering-python/")
+#pliki = search_dat_files("/home/willy/PycharmProjects/dictionary-filtering-python/")
 #print(pliki)
 #print(pliki[0])
 
 
+def get_cpu_number():
+    cpu_nr = multiprocessing.cpu_count()
+    print("Liczba cpu to: {0}".format(cpu_nr))
+    return cpu_nr
 
-def pobierz_plik():
-    print("pobierz plik")
+print(get_cpu_number())
+
+
+def pobierz_pliki(input):
+    print("pobierz pliki")
+    with open(input, 'r') as fin:
+        data = fin.read().splitlines(True)
+    with open(input, 'w') as fout:
+
+
+        pliki = data[:get_cpu_number()]
+        print("Linia przed: : " + str(pliki))
+
+        # using list comprehension + list slicing
+        # remove last character from list of strings
+        res = [sub[: -1] for sub in pliki]
+
+        # printing result
+        print("Linia Po : " + str(res))
+        fout.writelines(data[get_cpu_number():])
+    return res
 
 
 def min_max_pw(min, max, input, output):
@@ -81,6 +105,10 @@ def filtrowanie_plikow(min, max, input):
 def thread_function(name, plik):
     logging.info("Thread %s: starting", name)
     time.sleep(2)
+    """
+    dodac wywoływanie filtrowania do puki sa pliki .split
+    
+    """
     result = filtrowanie_plikow(min_pass, max_pass, plik)
     #pliki = filtrowanie_plikow(min, max, input, output)
     print(result)
@@ -89,6 +117,10 @@ def thread_function(name, plik):
 
 
 if __name__ == "__main__":
+    pliki = pobierz_pliki("lista_zadan.list")
+
+    print("Lista plikow do analizy: {0}".format(pliki))
+
     format = "%(asctime)s: %(message)s"
     logging.basicConfig(format=format, level=logging.INFO,
                         datefmt="%H:%M:%S")
@@ -112,8 +144,10 @@ if __name__ == "__main__":
         thread.join()
         logging.info("Main    : thread %d done", index)
 
-
+#TODO
 """
+pobierz_liki wycina ilosc linii == cpu i wrzuca do zmiennej
+dodaje ze znakiem konca li nii '\n'
 dopisac aby analizował pliki split, podane przez program główny.
 
 """
