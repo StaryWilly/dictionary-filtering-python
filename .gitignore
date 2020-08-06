@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# filter
+*.split
+*.filtered
+
 # C extensions
 *.so
 
