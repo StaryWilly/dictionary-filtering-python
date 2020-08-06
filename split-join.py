@@ -55,7 +55,8 @@ a = file_len(input_file)
 print("Wielkosc pliku Input: {0}".format(a))
 wielkosc = Path(input_file).stat().st_size #wielkosc pliku
 #podzial_linii = 5 * 1000000 # w MB
-podzial_linii = 1 * 1000000 # w B
+s = 1000000
+podzial_linii = 1 * s # wielkosc plikow w MB
 print("Podzial linii: {0}".format(podzial_linii))
 wynik = a * podzial_linii
 wynik_koncwy = wynik / wielkosc

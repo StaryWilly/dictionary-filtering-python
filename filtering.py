@@ -105,44 +105,47 @@ def filtrowanie_plikow(min, max, input):
 def thread_function(name, plik):
     logging.info("Thread %s: starting", name)
     time.sleep(2)
-    """
-    dodac wywoływanie filtrowania do puki sa pliki .split
-    
-    """
+
+
+
     result = filtrowanie_plikow(min_pass, max_pass, plik)
     #pliki = filtrowanie_plikow(min, max, input, output)
-    print(result)
+    #print(result)
     #print("Pliki znalezione przez Thread {0}: {1}\n".format(name,pliki))
     logging.info("Thread %s: finishing", name)
 
 
 if __name__ == "__main__":
+    #pliki = ['true']
     pliki = pobierz_pliki("lista_zadan.list")
+    while pliki:
 
-    print("Lista plikow do analizy: {0}".format(pliki))
 
-    format = "%(asctime)s: %(message)s"
-    logging.basicConfig(format=format, level=logging.INFO,
-                        datefmt="%H:%M:%S")
+        print("Lista plikow do analizy: {0}".format(pliki))
 
-    threads = list()
-    #for plik in pliki:
+        format = "%(asctime)s: %(message)s"
+        logging.basicConfig(format=format, level=logging.INFO,
+                            datefmt="%H:%M:%S")
 
-        #print(plik)
-    index = 0
-    for plik_th in pliki:
+        threads = list()
+        #for plik in pliki:
 
-        logging.info("Main    : create and start thread %d.", index)
-        #   usuniecie pliku z listy
-        x = threading.Thread(target=thread_function, args=(index,plik_th))
-        threads.append(x)
-        x.start()
-        index = index + 1
+            #print(plik)
+        index = 0
+        for plik_th in pliki:
 
-    for index, thread in enumerate(threads):
-        logging.info("Main    : before joining thread %d.", index)
-        thread.join()
-        logging.info("Main    : thread %d done", index)
+            logging.info("Main    : create and start thread %d.", index)
+            #   usuniecie pliku z listy
+            x = threading.Thread(target=thread_function, args=(index,plik_th))
+            threads.append(x)
+            x.start()
+            index = index + 1
+
+        for index, thread in enumerate(threads):
+            logging.info("Main    : before joining thread %d.", index)
+            thread.join()
+            logging.info("Main    : thread %d done", index)
+        pliki = pobierz_pliki("lista_zadan.list")
 
 #TODO
 """
