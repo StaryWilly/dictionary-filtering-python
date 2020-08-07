@@ -1,6 +1,9 @@
 #remote_ssh.py
 from paramiko.client import SSHClient
+import sys
+import os
 import paramiko
+import threading
 #pip3 install paramiko
 
 import logging
@@ -29,20 +32,32 @@ def execute_command_readlines(address, usr, pwd, command):
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         client.connect(address, username=usr, password=pwd)
-        _, ss_stdout, ss_stderr = client.exec_command(command)
-        r_out, r_err = ss_stdout.readlines(), ss_stderr.read()
-        logger.debug(r_err)
-        if len(r_err) > 5:
-            r_err[-1] = r_err[-1].strip()
-            logger.error(r_err)
-        else:
-            r_out[-1] = r_out[-1].strip()
-            logger.debug(r_out)
+        stdout = client.exec_command(command)[1]
+        for line in stdout:
+            # Process each line in the remote output
+            print(line)
         client.close()
     except IOError:
         logger.warning(".. host " + address + " is not up")
         return "host not up", "host not up"
 
-    return r_out, r_err
-result = execute_command_readlines("netbook", "willy", "sirozzy", "pwd")
-print(result[0])
+    except IndexError:
+        pass
+
+sciezka = "/mnt/pve/Netbook"
+#result = execute_command_readlines("netbook", "willy", "sirozzy", "cd /mnt/pve/Netbook; pwd ; python3 filtering.py &") #/home/willy/dict/filtering.py"
+
+def function_that_downloads(my_args):
+    print("hello")
+
+
+
+def my_inline_function(some_args):
+    # do some stuff
+    download_thread = threading.Thread(target=execute_command_readlines, args=some_args)
+    download_thread.start()
+    # continue doing stuff
+
+result = my_inline_function(("netbook", "willy", "sirozzy", "cd /mnt/pve/Netbook; pwd ; python3 filtering.py &"))
+result = my_inline_function(("10.0.0.12", "willy", "sirozzy", "cd /mnt/pve/Netbook; pwd ; python3 filtering.py &"))
+

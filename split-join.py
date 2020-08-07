@@ -79,10 +79,12 @@ zapis_listy("lista_zadan.list", b)
 
 #TODO
 """
+dodac konwersje
+
 dopisac funkcje do kasowania pliku INPUT
 przeniesc komendy startowe do funkcji
 
-dodac zdalne odpalanie skryptów z innych plików
+problem z kodowaniem znakow
 import file as f1
 f1.function(a,b)
 

@@ -149,7 +149,7 @@ if __name__ == "__main__":
 
 #TODO
 """
-pobierz_liki wycina ilosc linii == cpu i wrzuca do zmiennej
+pobierz_pliki wycina ilosc linii == cpu i wrzuca do zmiennej
 dodaje ze znakiem konca li nii '\n'
 dopisac aby analizował pliki split, podane przez program główny.
 
